@@ -1,8 +1,7 @@
-#SS MODELS
+## Tugas 3: <br>
+Model: <br>
 ![alt text](image.png)
-
-#SS MIGRATIONS
+MIGRATIONS: <br>
 ![alt text](image-1.png)
-
-#SS DATABASE
+DATABASE <br>
 ![alt text](image-2.png)
