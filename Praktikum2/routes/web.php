@@ -11,9 +11,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Test route for documentation
+Route::get('/test-docs', function () {
+    return response()->json(['message' => 'Test documentation route works']);
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/api-tester', function () {
+    return view('api-tester');
+})->name('api-tester');
+
+Route::get('/documentation', function () {
+    return redirect('/docs/api');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/todo', [TodoController::class, 'index'])->name('todo.index');
