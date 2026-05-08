@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -27,20 +27,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'qty' => 'required|integer',
-            'price' => 'required|numeric',
-        ]);
+        $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
 
-        Product::create([
-            'user_id' => auth()->id(),
-            'name' => $request->name,
-            'qty' => $request->qty,
-            'price' => $request->price,
-        ]);
+        Product::create($validated);
 
         return redirect()->route('products.index');
     }
@@ -64,17 +56,13 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductRequest $request, Product $product)
     {
         $this->authorize('update', $product);
 
-        $request->validate([
-            'name' => 'required',
-            'qty' => 'required|integer',
-            'price' => 'required|numeric',
-        ]);
+        $validated = $request->validated();
 
-        $product->update($request->only(['name', 'qty', 'price']));
+        $product->update($validated);
 
         return redirect()->route('products.index');
     }
